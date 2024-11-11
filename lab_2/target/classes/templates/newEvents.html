@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <title>Резервација на Настани</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Heading for Event List -->
+    <h2 class="text-center mb-4">Список на Настани</h2>
+
+    <!-- Event List Table -->
+    <div class="row">
+        <div class="col-12" th:if="${events.size() > 0}">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Одбери</th>
+                        <th scope="col">Име на Настан</th>
+                        <th scope="col">Опис</th>
+                        <th scope="col">Популарност</th>
+                        <th scope="col">Локација</th>
+                        <th scope="col" class="text-center">Акции</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="event : ${events}">
+                        <td>
+                            <input type="radio" name="eventName" th:value="${event.name}" form="bookingForm" required>
+                        </td>
+                        <td th:text="${event.name}"></td>
+                        <td th:text="${event.description}"></td>
+                        <td th:text="${event.popularityScore}"></td>
+                        <td th:text="${event.location != null} ? ${event.location.name} : 'No location'"></td>
+                        <td class="text-right">
+                            <!-- DELETE BUTTON FORM -->
+                            <form th:method="delete"
+                                  th:action="@{'/events/delete/{id}' (id=${event.getId()})}" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </form>
+                            <a class="btn btn-sm btn-info" th:href="@{'/events/edit-event/{id}' (id = ${event.getId()})}">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button to Add New Event -->
+    <div class="text-center mt-4">
+        <a href="/events/event/add" class="btn btn-dark">Додај нов настан</a>
+    </div>
+
+    <!-- Booking Form -->
+    <form id="bookingForm" th:method="post" th:action="@{/eventBooking}">
+        <div class="form-group">
+            <label for="numTickets">Број на Карти:</label>
+            <input type="number" name="numTickets" id="numTickets" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Потврди Резервација</button>
+    </form>
+
+</div>
+
+</div>
+</body>
+</html>
