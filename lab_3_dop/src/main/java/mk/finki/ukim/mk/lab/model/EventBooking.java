@@ -20,7 +20,8 @@ public class EventBooking {
 
      Long numberOfTickets;
 
-     @OneToOne
+     @ManyToOne
+     @JoinColumn(name = "event_id")
      Event event;
 
      public EventBooking(String eventName, String attendeeName, String attendeeAddress, Long numberOfTickets) {
