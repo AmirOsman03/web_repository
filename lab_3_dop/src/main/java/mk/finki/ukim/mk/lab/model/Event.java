@@ -24,7 +24,7 @@ public class Event {
      Category category;
 
      @OneToMany(mappedBy = "event")
-     EventBooking eventBooking;
+     List<EventBooking> bookingList;
 
      public Event(String name, String description, double popularityScore, Location location, Category category) {
           this.name = name;
