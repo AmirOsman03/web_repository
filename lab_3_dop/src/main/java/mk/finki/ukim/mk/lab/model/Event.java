@@ -23,7 +23,7 @@ public class Event {
      @ManyToOne
      Category category;
 
-     @OneToOne(mappedBy = "event")
+     @OneToMany(mappedBy = "event")
      EventBooking eventBooking;
 
      public Event(String name, String description, double popularityScore, Location location, Category category) {
